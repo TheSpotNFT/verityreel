@@ -20,7 +20,7 @@ export default function Page({ page }: { page: PageData }) {
                 : page.image ? 'cover' : 'text')
 
     return (
-        <div className="shrink-0 w-full h-full overflow-hidden pb-8">
+        <div className="shrink-0 w-full h-full overflow-hidden pb-12">
             {layout === 'cover' && <Cover page={page} />}
             {layout === 'wrap-left' && <Wrap page={page} side="left" />}
             {layout === 'wrap-right' && <Wrap page={page} side="right" />}
