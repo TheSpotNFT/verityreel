@@ -41,9 +41,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </header>
 
-        <main className="h-[calc(var(--vh,1vh)*100-var(--header-h))] overflow-hidden">
+        <main className="h-[calc(var(--vh,1vh)*100-var(--header-h))] overflow-hidden flex items-stretch justify-center">
           {children}
         </main>
+
 
       </body>
     </html>

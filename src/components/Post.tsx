@@ -32,29 +32,35 @@ function formatDate(iso?: string) {
 
 export default function Post({ post }: { post: PostData }) {
     return (
-        <section aria-label={post.title ?? 'Post'} className="relative w-screen h-screen overflow-hidden">
-            {/* Header Bar */}
-            <header className="absolute top-0 left-0 w-full flex justify-between items-start p-4 z-10 pointer-events-none">
-                <div className="pointer-events-auto bg-black/55 backdrop-blur rounded-lg px-3 py-1.5 border border-vr-line">
-                    <span className="text-sm font-semibold text-white">@{post.author.handle}</span>
-                </div>
-                <div className="pointer-events-auto bg-black/55 backdrop-blur rounded-lg px-3 py-1.5 border border-vr-line text-[11px] text-vr-sub">
-                    {formatDate(post.createdAt)}
-                </div>
-            </header>
+        <section className="relative w-screen h-[calc(var(--vh,1vh)*100-var(--header-h))] overflow-hidden">
+            {/* Centering shell that matches the feed section height */}
+            <div className="frame-shell">
+                {/* The phone-like frame that holds horizontal pages */}
+                <div className="phone-frame relative bg-vr-card">
+                    {/* Overlays are positioned relative to the frame */}
+                    <header className="absolute top-0 left-0 w-full flex justify-between items-start p-3 md:p-4 z-10 pointer-events-none">
+                        <div className="pointer-events-auto bg-black/55 backdrop-blur rounded-lg px-2.5 py-1.5 border border-vr-line">
+                            <span className="text-sm font-semibold text-white">@{post.author.handle}</span>
+                        </div>
+                        <div className="pointer-events-auto bg-black/55 backdrop-blur rounded-lg px-2.5 py-1.5 border border-vr-line text-[11px] text-vr-sub">
+                            {formatDate(post.createdAt)}
+                        </div>
+                    </header>
 
-            {/* Pageflow content */}
-            <Pageflow pages={post.pages} />
+                    {/* Pageflow fills the frame */}
+                    <Pageflow pages={post.pages} />
 
-            {/* Optional footer (like buttons) */}
-            <footer className="absolute bottom-4 left-4 z-10 flex gap-3">
-                <button className="rounded bg-black/55 backdrop-blur px-3 py-1 border border-vr-line text-sm hover:border-vr-green transition">
-                    Like
-                </button>
-                <button className="rounded bg-black/55 backdrop-blur px-3 py-1 border border-vr-line text-sm hover:border-vr-green transition">
-                    Repost
-                </button>
-            </footer>
+                    {/* Optional footer actions inside the frame */}
+                    <footer className="absolute bottom-3 left-3 z-10 flex gap-3">
+                        <button className="rounded bg-black/55 backdrop-blur px-3 py-1 border border-vr-line text-sm hover:border-vr-green transition">
+                            Like
+                        </button>
+                        <button className="rounded bg-black/55 backdrop-blur px-3 py-1 border border-vr-line text-sm hover:border-vr-green transition">
+                            Repost
+                        </button>
+                    </footer>
+                </div>
+            </div>
         </section>
     )
 }
