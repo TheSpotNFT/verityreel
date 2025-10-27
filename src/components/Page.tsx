@@ -2,20 +2,26 @@
 import Image from 'next/image'
 import clsx from 'clsx'
 
-type PageData = {
+export type PageData = {
     layout?: 'cover' | 'wrap-left' | 'wrap-right' | 'split-50' | 'grid-2' | 'text'
     image?: string
     images?: string[]
-    imageAlign?: 'left' | 'right' | 'center' // legacy, still supported
+    imageAlign?: 'left' | 'right' | 'center' // legacy support
     text?: string
     caption?: string
     credit?: string
 }
 
 export default function Page({ page }: { page: PageData }) {
-    const layout = page.layout ?? (page.imageAlign === 'left' ? 'wrap-left' :
-        page.imageAlign === 'right' ? 'wrap-right' :
-            page.image ? 'cover' : 'text')
+    const layout =
+        page.layout ??
+        (page.imageAlign === 'left'
+            ? 'wrap-left'
+            : page.imageAlign === 'right'
+                ? 'wrap-right'
+                : page.image
+                    ? 'cover'
+                    : 'text')
 
     return (
         <div className="shrink-0 w-screen page-viewport overflow-hidden pb-12">
