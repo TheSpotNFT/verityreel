@@ -2,6 +2,7 @@ import './globals.css'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import VhFix from '@/components/VhFix'
+import SnapY from '@/components/SnapY'
 
 export const metadata: Metadata = {
   title: 'Verity Reel — Pageflow MVP',
@@ -17,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
 
         <VhFix />
+        <SnapY />
         <header className="h-[var(--header-h)] border-b border-vr-line flex items-center bg-vr-bg/90 backdrop-blur-md sticky top-0 z-50">
           <div className="w-full px-5 md:px-8 flex items-center justify-between">
             <div className="flex items-center gap-2">

@@ -7,21 +7,53 @@ type PostData = {
     title?: string
     createdAt?: string
     author: Author
-    pages: Array<{ image?: string; imageAlign?: 'left' | 'right' | 'center'; text?: string }>
+    pages: Array<{
+        layout?: any
+        image?: string
+        images?: string[]
+        imageAlign?: 'left' | 'right' | 'center'
+        text?: string
+        caption?: string
+        credit?: string
+    }>
+}
+
+function formatDate(iso?: string) {
+    if (!iso) return ''
+    const d = new Date(iso)
+    return d.toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    })
 }
 
 export default function Post({ post }: { post: PostData }) {
     return (
-        <section aria-label={post.title ?? 'Post'}>
-            <header className="absolute z-10 left-4 top-3 text-sm text-vr-sub pointer-events-none">
-                <span className="font-semibold text-vr-text">@{post.author.handle}</span>
-                <span className="ml-2 rounded bg-vr-card/70 px-2 py-0.5 border border-vr-line">{post.author.role}</span>
-                {post.createdAt && <span className="ml-2">{new Date(post.createdAt).toLocaleString()}</span>}
+        <section aria-label={post.title ?? 'Post'} className="relative w-screen h-screen overflow-hidden">
+            {/* Header Bar */}
+            <header className="absolute top-0 left-0 w-full flex justify-between items-start p-4 z-10 pointer-events-none">
+                <div className="pointer-events-auto bg-black/55 backdrop-blur rounded-lg px-3 py-1.5 border border-vr-line">
+                    <span className="text-sm font-semibold text-white">@{post.author.handle}</span>
+                </div>
+                <div className="pointer-events-auto bg-black/55 backdrop-blur rounded-lg px-3 py-1.5 border border-vr-line text-[11px] text-vr-sub">
+                    {formatDate(post.createdAt)}
+                </div>
             </header>
+
+            {/* Pageflow content */}
             <Pageflow pages={post.pages} />
-            <footer className="absolute z-10 left-4 bottom-3 flex items-center gap-3 text-sm">
-                <button className="rounded bg-vr-card/70 px-3 py-1 border border-vr-line">Like</button>
-                <button className="rounded bg-vr-card/70 px-3 py-1 border border-vr-line">Repost</button>
+
+            {/* Optional footer (like buttons) */}
+            <footer className="absolute bottom-4 left-4 z-10 flex gap-3">
+                <button className="rounded bg-black/55 backdrop-blur px-3 py-1 border border-vr-line text-sm hover:border-vr-green transition">
+                    Like
+                </button>
+                <button className="rounded bg-black/55 backdrop-blur px-3 py-1 border border-vr-line text-sm hover:border-vr-green transition">
+                    Repost
+                </button>
             </footer>
         </section>
     )

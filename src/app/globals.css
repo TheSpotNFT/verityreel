@@ -9,9 +9,8 @@
 /* Prevent global page scroll */
 html,
 body {
-  overflow: hidden;
-  /* stops scroll wheel movement */
   height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -22,32 +21,47 @@ a {
   @apply hover:underline;
 }
 
-/* The feed itself handles scrolling */
+/* FEED: one full-viewport post per snap */
 .feed-y {
   height: calc(var(--vh, 1vh) * 100 - var(--header-h));
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
+  scroll-snap-stop: always;
+  /* <- ensures snaps complete */
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  /* prevent rubber-banding bubbling */
 }
 
-/* Each post fills the screen */
 .feed-y>section {
   height: calc(var(--vh, 1vh) * 100 - var(--header-h));
   scroll-snap-align: start;
+  scroll-margin-top: 0;
 }
 
-/* Optional: lock wheel scroll in x-axis container */
+/* Horizontal pageflow: one full-viewport page per snap */
 .pageflow-x {
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
+  scroll-snap-stop: always;
+  /* ensure snap completes */
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  /* stop overscroll bubbling */
 }
 
-/* Page viewport height */
+.pageflow-x>* {
+  scroll-snap-align: start;
+}
+
+
+/* Disable vertical scrolling inside a page */
 .page-viewport {
   height: calc(var(--vh, 1vh) * 100 - var(--header-h));
+  overflow: hidden;
+  /* <- was overflow-y:auto before */
 }
 
 /* Text-wrap image helpers (keep for left/right flowing layouts) */
