@@ -1,26 +1,77 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Prevent global page scroll */
+html,
+body {
+  overflow: hidden;
+  /* stops scroll wheel movement */
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-vr-bg text-vr-text;
+}
+
+a {
+  @apply hover:underline;
+}
+
+/* The feed itself handles scrolling */
+.feed-y {
+  height: calc(var(--vh, 1vh) * 100 - var(--header-h));
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Each post fills the screen */
+.feed-y>section {
+  height: calc(var(--vh, 1vh) * 100 - var(--header-h));
+  scroll-snap-align: start;
+}
+
+/* Optional: lock wheel scroll in x-axis container */
+.pageflow-x {
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Page viewport height */
+.page-viewport {
+  height: calc(var(--vh, 1vh) * 100 - var(--header-h));
+}
+
+/* Text-wrap image helpers (keep for left/right flowing layouts) */
+.float-left-wrap {
+  float: left;
+  margin: 0.25rem 0.75rem 0.5rem 0;
+  max-width: 45%;
+}
+
+.float-right-wrap {
+  float: right;
+  margin: 0.25rem 0 0.5rem 0.75rem;
+  max-width: 45%;
+}
+
+/* Image clarity: avoid blurring on high DPI */
+img {
+  image-rendering: auto;
+}
+
+header a {
+  text-decoration: none;
+}
+
+header a:hover {
+  color: var(--vr-green);
 }

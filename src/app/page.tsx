@@ -1,65 +1,61 @@
-import Image from "next/image";
+import fs from 'node:fs'
+import path from 'node:path'
+import Post from '@/components/Post'
 
-export default function Home() {
+/** Page-level data (supports new layouts + legacy imageAlign) */
+type PageData = {
+  layout?: 'cover' | 'wrap-left' | 'wrap-right' | 'split-50' | 'grid-2' | 'text'
+  image?: string
+  images?: string[]
+  imageAlign?: 'left' | 'right' | 'center' // legacy support
+  text?: string
+  caption?: string
+  credit?: string
+}
+
+type PostType = {
+  id: string
+  title?: string
+  createdAt?: string
+  author: { handle: string; role: 'poster' | 'member' | 'editor' }
+  pages: PageData[]
+}
+
+function readPosts(): PostType[] {
+  try {
+    const file = path.join(process.cwd(), 'data', 'posts.json')
+    const raw = fs.readFileSync(file, 'utf-8')
+    const json = JSON.parse(raw)
+
+    const posts = (json?.posts ?? []) as PostType[]
+
+    // Optional: sort newest first if not already
+    posts.sort((a, b) => {
+      const ta = a.createdAt ? Date.parse(a.createdAt) : 0
+      const tb = b.createdAt ? Date.parse(b.createdAt) : 0
+      return tb - ta
+    })
+
+    return posts
+  } catch {
+    // If the file doesn't exist yet, return an empty feed
+    return []
+  }
+}
+
+export default function FeedPage() {
+  const posts = readPosts()
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="feed-y">
+      {posts.length === 0 && (
+        <section className="flex items-center justify-center">
+          <p>No posts yet.</p>
+        </section>
+      )}
+      {posts.map((p) => (
+        <Post key={p.id} post={p} />
+      ))}
     </div>
-  );
+  )
 }

@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    color-scheme: dark;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    @apply bg-vr-bg text-vr-text;
+}
+
+a {
+    @apply hover:underline;
+}
+
+/* Horizontal page snap */
+.pageflow-x {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.pageflow-x>* {
+    scroll-snap-align: start;
+}
+
+/* Vertical feed snap (optional; keep normal scroll for comfort) */
+/*
+.feed-y {
+  scroll-snap-type: y proximity;
+}
+.feed-y > * {
+  scroll-snap-align: start;
+}
+*/
+
+/* Simple “float” wrapping for images inside text */
+.float-left-wrap {
+    float: left;
+    margin: 0.25rem 0.75rem 0.5rem 0;
+    max-width: 45%;
+}
+
+.float-right-wrap {
+    float: right;
+    margin: 0.25rem 0 0.5rem 0.75rem;
+    max-width: 45%;
+}

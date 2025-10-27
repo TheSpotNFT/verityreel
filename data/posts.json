@@ -1,0 +1,49 @@
+{
+    "posts": [
+        {
+            "id": "p-nature-1",
+            "author": {
+                "handle": "wildframes",
+                "role": "poster"
+            },
+            "title": "Alpine Morning",
+            "createdAt": "2025-10-01T10:00:00Z",
+            "pages": [
+                {
+                    "layout": "cover",
+                    "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=2000&q=90&auto=format",
+                    "caption": "Dawn over the ridge"
+                },
+                {
+                    "layout": "wrap-right",
+                    "image": "https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6?w=1600&q=90&auto=format",
+                    "text": "Thin air. Cold light. The ridge wakes first…"
+                }
+            ]
+        },
+        {
+            "id": "p-work-1",
+            "author": {
+                "handle": "roadworks",
+                "role": "poster"
+            },
+            "title": "Storm Catch Basin Renewal",
+            "createdAt": "2025-10-02T09:00:00Z",
+            "pages": [
+                {
+                    "layout": "split-50",
+                    "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=2000&q=90&auto=format",
+                    "text": "Real work, real outcomes…"
+                },
+                {
+                    "layout": "grid-2",
+                    "images": [
+                        "https://images.unsplash.com/photo-1557499305-0af888c3d299?w=1400&q=90&auto=format",
+                        "https://images.unsplash.com/photo-1504870712357-65ea720d6078?w=1400&q=90&auto=format"
+                    ],
+                    "text": "Materials + Lessons learned."
+                }
+            ]
+        }
+    ]
+}
