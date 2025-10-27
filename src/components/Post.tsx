@@ -58,6 +58,9 @@ export default function Post({ post }: { post: PostData }) {
                         <button className="rounded bg-black/55 backdrop-blur px-3 py-1 border border-vr-line text-sm hover:border-vr-green transition">
                             Repost
                         </button>
+                        <button className="rounded bg-black/55 backdrop-blur px-3 py-1 border border-vr-line text-sm hover:border-vr-green transition">
+                            Comments
+                        </button>
                     </footer>
                 </div>
             </div>
